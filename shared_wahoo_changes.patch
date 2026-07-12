@@ -1,0 +1,62 @@
+diff --git a/device.mk b/device.mk
+index 28bdd569..fe450561 100644
+--- a/device.mk
++++ b/device.mk
+@@ -26,7 +26,7 @@ PRODUCT_SOONG_NAMESPACES += \
+     hardware/google/interfaces \
+     hardware/google/pixel \
+     hardware/qcom/audio \
+-    hardware/qcom/bt/msm8998/libbt-vendor \
++    hardware/qcom/bt/msm8998/liblog \
+     hardware/qcom/data/ipacfg-mgr/msm8998 \
+     hardware/qcom/gps/msm8998 \
+     hardware/qcom/msm8998 \
+@@ -41,8 +41,8 @@ PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := true
+ 
+ # Add common definitions for Qualcomm
+ $(call soong_config_set,rfs,persist_symlink_target,persist)
+-$(call soong_config_set,rfs,firmware_symlink_target,firmware)
+-$(call soong_config_set,rfs,mpss_firmware_symlink_target,firmware)
++$(call soong_config_set,rfs,firmware_symlink_target,firmware_mnt) # changed from firmware reflecting changes Android 15
++$(call soong_config_set,rfs,mpss_firmware_symlink_target,firmware_mnt) # changed from firmware reflecting changes to Android 15
+ $(call inherit-product, hardware/qcom-caf/common/common.mk)
+ 
+ SRC_MEDIA_HAL_DIR := hardware/qcom/media/msm8998
+@@ -199,7 +199,7 @@ PRODUCT_PACKAGES += \
+     android.hardware.graphics.allocator@2.0-impl:64 \
+     android.hardware.graphics.allocator@2.0-service \
+     android.hardware.graphics.mapper@2.0-impl-2.1 \
+-    libbt-vendor
++    liblog
+ 
+ # Light HAL
+ PRODUCT_PACKAGES += \
+@@ -270,8 +270,8 @@ PRODUCT_PACKAGES += \
+ 
+ # Boot control HAL
+ PRODUCT_PACKAGES += \
+-    android.hardware.boot-service.qti \
+-    android.hardware.boot-service.qti.recovery
++    liblog \
++    liblog
+ 
+ $(call soong_config_set,QTI_GPT_UTILS,USE_BSG_FRAMEWORK,false)
+ 
+@@ -307,7 +307,7 @@ PRODUCT_PACKAGES += \
+     libqcompostprocbundle
+ 
+ PRODUCT_PACKAGES += \
+-    audio.primary.msm8998 \
++    liblog \
+     audio.usb.default \
+     audio.r_submix.default \
+     libaudio-resampler \
+@@ -428,7 +428,7 @@ PRODUCT_COPY_FILES += \
+ 
+ # Build necessary packages for vendor
+ PRODUCT_PACKAGES += \
+-    chre_daemon_msm \
++    liblog \
+     ese-ls-provision \
+     ese-replay
+ 
